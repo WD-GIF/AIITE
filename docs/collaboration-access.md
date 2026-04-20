@@ -67,7 +67,21 @@ sudo -u huacz666 ssh -T git@github.com
 
 ### 3. CODEOWNERS（已提交到仓库）
 
-根目录 `CODEOWNERS` 已指定 **`@WD-GIF`** 为默认所有者；`/docs/` 由 **`@WD-GIF`** 与 **`@huacz`** 共同列出。若启用 **Require review from Code Owners**，请确认组织/仓库设置支持该选项。
+根目录 `CODEOWNERS` 约定：
+
+- **`/src/`、`/app/`、`/backend/`、`/frontend/`、`/packages/`、`/core/`、`/server/`** 等：**仅 `@WD-GIF`** 作为 Code Owner → 视为**主程序**，协作者不应在 PR 里随意改动；若必须改，须你明确安排或拆 PR。
+- **`/features/`、`/contrib/`、`/docs/`**：**`@WD-GIF` + `@huacz`** → **huacz 默认只在这些目录里提交**（小功能、文档、实验代码）。
+
+在分支保护规则中建议勾选 **Require review from Code Owners**（名称以 GitHub 界面为准），这样动到主程序路径时**必须经你审**；仅改 `features/` / `contrib/` / `docs/` 时也会通知双方，**合并按钮仍建议仅由你操作**（见下节）。
+
+### 4. 分工约定（主分支由你掌控 + huacz 只动「非主程序」）
+
+| 角色 | 做什么 |
+|------|--------|
+| **你（WD-GIF / ubuntu）** | 在 **`main`** 上合并发版；核心目录（见上表）由你或你审核后的 PR 合入；可本地 `push main`（若规则允许）或通过 PR。 |
+| **huacz** | **不要**在 `src/`、`app/`、`backend/` 等核心目录直接长期开发；小功能放在 **`features/`** 或 **`contrib/`**；文档在 **`docs/`**。从 **`main`** 拉最新 → 建 **`feature/huacz-简述`** → 只改允许目录 → `push` 分支 → **对你开 PR**，由你 **Review + Merge**。 |
+
+若 huacz 的 PR 里混进了核心目录的改动，你应在审查中要求对方**拆 PR** 或**撤回无关文件**，避免「小功能 PR」夹带主程序大改。
 
 ## 日常协作命令（huacz）
 
