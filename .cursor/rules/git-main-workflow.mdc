@@ -1,0 +1,36 @@
+---
+description: 用户口头触发时自动执行 Git 提交/推送与 main 同步（AIITE 仓库）
+alwaysApply: true
+---
+
+# Git：提交与更新（用户口令）
+
+仓库根目录默认 **`/home/AIITE`**（主开发者 ubuntu）。若用户指定其他路径，以用户为准。
+
+## 触发「提交修改」或「提交修改后」
+
+在用户未另说明时，在仓库根目录执行：
+
+1. `git status`（若需确认范围）
+2. `git checkout main`（若当前不在 `main` 且用户声明改动对应 `main`）
+3. `git add -A`
+4. `git commit -m "<说明>"`  
+   - 若同一条消息里已给出提交说明，使用该说明。  
+   - 否则用一句简短英文或中文概括本次对话中的改动；仍无法概括时用：`chore: update AIITE`
+5. `git push origin main`  
+   - 若因 **分支保护** 被拒：改为创建/切换到 `feature/用户名-简述`，在同一提交上 `git push -u origin feature/...`，并提示用户在 GitHub 开 PR 合并到 `main`。
+
+## 触发「可以更新了」或「更新一下」
+
+在仓库根目录执行：
+
+1. `git fetch origin`
+2. `git checkout main`
+3. `git pull origin main`  
+   - 若提示 **divergent branches**：先 `git config pull.rebase false`（若未配置），再 `git pull origin main --no-rebase`；或按用户此前意愿使用 `git reset --hard origin/main`（**仅在用户明确同意丢弃本地仅 main 独有提交时**）。
+
+## 注意
+
+- 执行前若存在未保存的编辑器缓冲，提醒用户先保存文件。  
+- 不删除 `.env` 等敏感文件；若 `.gitignore` 已忽略则不会被 `add`。  
+- `huacz` / `huacz666` 的目录 **`/home/huacz/AIITE`**、**`/home/huacz666/AIITE`** 不由本规则默认操作，除非用户点名。
