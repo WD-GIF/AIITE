@@ -18,7 +18,7 @@ alwaysApply: true
    - 若同一条消息里已给出提交说明，使用该说明。  
    - 否则用一句简短英文或中文概括本次对话中的改动；仍无法概括时用：`chore: update AIITE`
 5. `git push origin main`  
-   - 若因 **分支保护** 被拒：改为创建/切换到 `feature/用户名-简述`，在同一提交上 `git push -u origin feature/...`，并提示用户在 GitHub 开 PR 合并到 `main`。
+   - 若因 **分支保护** 被拒（本仓库常见）：`git push -u origin feature/main-auto-git`（若分支已存在可改用带日期后缀，如 `feature/main-auto-20260421`），并提示用户在 GitHub **New pull request → base: `main`** 合并。
 
 ## 触发「可以更新了」或「更新一下」
 
