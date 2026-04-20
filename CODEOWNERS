@@ -1,5 +1,19 @@
-# 主开发者（仓库管理员 GitHub 账号）：默认所有路径变更建议由其审核
+# 约定：同一文件若匹配多行，以文件中「更靠后的」匹配行为准（GitHub CODEOWNERS）。
+# 因此先写通配，再写具体目录。
+
+# 默认：全仓库由主开发者负责
 * @WD-GIF
 
-# 文档与开发说明：协作者 huacz 可共同维护（是否必须其审核由 GitHub 分支保护规则决定）
+# 主程序 / 核心（仅主开发者为 Code Owner；请按实际目录增删）
+/src/ @WD-GIF
+/app/ @WD-GIF
+/backend/ @WD-GIF
+/frontend/ @WD-GIF
+/packages/ @WD-GIF
+/core/ @WD-GIF
+/server/ @WD-GIF
+
+# 协作者 huacz：小功能、实验与文档（与主开发者共同列为 Owner；合并仍走 PR，由主开发者 Merge）
+/features/ @WD-GIF @huacz
+/contrib/ @WD-GIF @huacz
 /docs/ @WD-GIF @huacz
