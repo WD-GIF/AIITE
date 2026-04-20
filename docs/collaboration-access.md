@@ -8,8 +8,9 @@
 |----|------|
 | Linux 用户 | `ubuntu`：主开发者工作区 `/home/AIITE` |
 | Linux 用户 | `huacz`：工作区 `/home/huacz/AIITE`（从主仓库本地克隆，远程为 `git@github.com:WD-GIF/AIITE.git`） |
-| huacz Git 身份 | `user.name=huacz`，`user.email=3248197416@qq.com` |
-| huacz SSH | 密钥 `~/.ssh/id_ed25519`，`~/.ssh/config` 已指向 GitHub |
+| Linux 用户 | `huacz666`：工作区 `/home/huacz666/AIITE`，`origin` 已从 HTTPS 改为 **SSH**（`git@github.com:WD-GIF/AIITE.git`） |
+| huacz Git 身份 | `user.name=huacz`，`user.email=3248197416@qq.com`（`huacz` 与 `huacz666` 两个 Linux 用户均已设相同提交身份，可按需分别修改） |
+| huacz / huacz666 SSH | 各用户独立密钥 `~/.ssh/id_ed25519` 与 `~/.ssh/config`（两把公钥均需加到 **同一 GitHub 账号 huacz** 的 SSH keys 中） |
 
 ### huacz 将公钥登记到 GitHub（必做，否则无法 push）
 
@@ -28,6 +29,24 @@ sudo -u huacz ssh -T git@github.com
 ```
 
 看到 `Hi huacz!` 即表示成功。
+
+### Linux 用户 `huacz666`（第二把公钥，必做）
+
+若协作者用 **`huacz666`** 登录服务器开发，该账号使用 **另一把** SSH 私钥，必须在 **同一 GitHub 账号 `huacz`** 下再添加一条 SSH key（GitHub 允许多个 key）。
+
+```bash
+sudo cat /home/huacz666/.ssh/id_ed25519.pub
+```
+
+复制整行 → **Settings → SSH and GPG keys → New SSH key**（标题可写 `server-huacz666`）。
+
+验证：
+
+```bash
+sudo -u huacz666 ssh -T git@github.com
+```
+
+应出现 `Hi huacz!`。添加前 `git push` 会报 `Permission denied (publickey)`，属正常现象。
 
 ## GitHub 仓库侧（主开发者 WD-GIF 在网页上操作）
 
@@ -65,3 +84,13 @@ git push -u origin feature/huacz-简述
 ```
 
 随后在 GitHub 上 **New Pull Request**，由 **WD-GIF** 审核并合并。
+
+## 日常协作命令（huacz666）
+
+与 `huacz` 相同，工作目录为 `/home/huacz666/AIITE`，使用 SSH 远程后 **不再出现** `Username for 'https://github.com':` 提示。
+
+```bash
+cd ~/AIITE
+git pull origin main
+git push -u origin feature/分支名
+```
