@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 文献助手 · Crossref 检索</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>AI 文献助手</h1>
+        <p class="tagline">Crossref 文献检索 · 本地演示站点（端口 4399）</p>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="功能区">
+      <button type="button" class="tab is-active" data-panel="panel-crossref">Crossref 检索</button>
+      <button type="button" class="tab" data-panel="panel-draft">文献插入（草稿）</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="panel-crossref" class="panel is-visible" aria-labelledby="crossref-heading">
+      <h2 id="crossref-heading" class="sr-only">Crossref 检索</h2>
+
+      <div class="grid-two">
+        <article class="card">
+          <h3>关键词检索</h3>
+          <p class="hint">在 Crossref 元数据库中搜索题名、作者等（最多展示 25 条）。</p>
+          <form id="form-search" class="stack">
+            <label for="q">检索词</label>
+            <input id="q" name="q" type="search" autocomplete="off" placeholder="例如：transformer machine translation" maxlength="512" required />
+            <div class="row">
+              <label class="inline" for="rows">条数</label>
+              <select id="rows" name="rows">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="25">25</option>
+              </select>
+              <button type="submit" class="btn primary">检索</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3>按 DOI 解析</h3>
+          <p class="hint">支持纯 DOI 或 <code>https://doi.org/…</code> 链接。</p>
+          <form id="form-doi" class="stack">
+            <label for="doi">DOI</label>
+            <input id="doi" name="doi" type="text" autocomplete="off" placeholder="10.1038/nature02426" maxlength="512" required />
+            <button type="submit" class="btn primary">解析</button>
+          </form>
+        </article>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+      <section id="results" class="results" aria-live="polite"></section>
+    </section>
+
+    <section id="panel-draft" class="panel" aria-labelledby="draft-heading" hidden>
+      <h2 id="draft-heading">文献插入（草稿区）</h2>
+      <p class="lead">
+        此处用于粘贴正文或上传 <code>.txt</code>，便于对照规格文档迭代 UI；真正的 LLM 插入流水线接入后端后再启用。
+      </p>
+      <div class="card">
+        <label for="draft-text">正文</label>
+        <textarea id="draft-text" rows="14" placeholder="粘贴中文或英文草稿……"></textarea>
+        <div class="row toolbar">
+          <label class="btn ghost">
+            上传 .txt
+            <input id="draft-file" type="file" accept=".txt,text/plain" hidden />
+          </label>
+          <span id="draft-meta" class="meta"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      本页面展示的检索结果来自 Crossref 公开元数据。人工智能生成的引用与参考文献<strong>可能存在不准确或无法查证的条目</strong>；投稿或法律依据类用途请务必人工核对原始出版物。
+    </p>
+    <p class="fine">User-Agent 已向 Crossref 声明联系邮箱（服务端配置）。请勿提交保密或敏感全文。</p>
+  </footer>
+
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
